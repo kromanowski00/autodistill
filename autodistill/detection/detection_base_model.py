@@ -6,6 +6,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict
 
+from stqdm import stqdm
+
 import cv2
 import numpy as np
 import roboflow
@@ -84,7 +86,7 @@ class DetectionBaseModel(BaseModel):
             slicer = sv.InferenceSlicer(callback=self.predict)
 
         files = glob.glob(input_folder + "/*" + extension)
-        progress_bar = tqdm(files, desc="Labeling images")
+        progress_bar = stqdm(files, desc="Labeling images")
         # iterate through images in input_folder
         for f_path in progress_bar:
             progress_bar.set_description(desc=f"Labeling {f_path}", refresh=True)
